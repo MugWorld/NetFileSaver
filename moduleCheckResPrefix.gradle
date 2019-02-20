@@ -13,7 +13,7 @@ def checkChildProjectLauncherFile(){
                 def files = it.listFiles()
                 files.each {
                     if (!it.name.startsWith(project.name) && it.name != ".DS_Store"){//没有这个这个文件先过滤.DS_Store
-                        throw new RuntimeException("This file must be rename with project name prefix!!! Path:${it.getAbsolutePath()}")
+                        throw new RuntimeException("This file must be rename with project name prefix!!! For example fileName set libName_fileName.格式   filePath:${it.getAbsolutePath()}")
                     }
                 }
             }
