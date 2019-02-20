@@ -1,0 +1,25 @@
+/**
+ * 检测module下 res 中 drawable layout mipmap的前缀是否为module name开头
+ * @return
+ */
+def checkChildProjectLauncherFile(){
+    def project = getProject()
+    println "Current project:$project.name"
+    def path = project.projectDir.getAbsolutePath()+ "/src/main/res/"
+    def filePath = new File(path)
+    if (filePath.exists()){
+        filePath.listFiles().each {
+            if (it.name.startsWith("drawable") || it.name.startsWith("layout") || it.name.startsWith("mipmap")){
+                def files = it.listFiles()
+                files.each {
+                    if (!it.name.startsWith(project.name) && it.name != ".DS_Store"){//没有这个这个文件先过滤.DS_Store
+                        throw new RuntimeException("This file must be rename with project name prefix!!! Path:${it.getAbsolutePath()}")
+                    }
+                }
+            }
+        }
+    }else{
+        println "Not found childProject res path"
+    }
+}
+checkChildProjectLauncherFile()
